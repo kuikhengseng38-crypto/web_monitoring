@@ -29,7 +29,7 @@ web_monitoring/
 ├── admin/                 Admin pages (login, dashboard, websites, logs, settings)
 ├── assets/css/            Styles
 ├── assets/js/             Show/hide password, delete confirm
-├── config/                Database + app settings
+├── config/                App settings (database.local.php is gitignored)
 ├── cron/monitor.php       Automatic monitoring engine
 ├── docs/screenshots/      README screenshots
 ├── includes/              Auth, Telegram, check logic, layout
@@ -120,14 +120,15 @@ Status colors:
 
 ## cPanel upload
 
-1. In cPanel **MySQL Databases**, the database and user are already created (`synergy1_kuikhengseng_web_monitoring` / `synergy1_shaoxi`). Make sure the user is **added to the database** with ALL PRIVILEGES.
-2. Open **phpMyAdmin**, select that database, **Import** `sql/schema.sql`.
-3. Upload this folder to `public_html` (or a subfolder) with File Manager or FTP.
-4. Open your site URL. If tables are missing, visit `/install.php` once, then delete `install.php`.
-5. Log in: `admin` / `admin123` and change the password.
-6. cPanel → **Cron Jobs** → every 1 minute. Paste the command shown in **Admin → Settings**.
+1. In cPanel **MySQL Databases**, create a database and user, then add the user to the database with ALL PRIVILEGES.
+2. Copy `config/database.local.php.example` to `config/database.local.php` and fill in `DB_NAME`, `DB_USER`, and `DB_PASS`. Do not commit that file.
+3. Open **phpMyAdmin**, select that database, **Import** `sql/schema.sql`.
+4. Upload this folder to `public_html` (or a subfolder) with File Manager or FTP. Include `config/database.local.php` on the server only.
+5. Open your site URL. If tables are missing, visit `/install.php` once, then delete `install.php`.
+6. Log in: `admin` / `admin123` and change the password.
+7. cPanel → **Cron Jobs** → every 1 minute. Paste the command shown in **Admin → Settings**.
 
-`config/database.php` already has the cPanel database settings. Host stays `localhost`.
+Host stays `localhost`.
 
 ## Forgot password
 

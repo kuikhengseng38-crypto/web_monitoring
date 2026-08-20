@@ -1,5 +1,5 @@
 -- Website Monitoring System
--- cPanel: select database synergy1_kuikhengseng_web_monitoring in phpMyAdmin, then Import this file.
+-- Select your database in phpMyAdmin, then Import this file.
 -- Do not run CREATE DATABASE on cPanel (the database already exists).
 
 CREATE TABLE IF NOT EXISTS admins (

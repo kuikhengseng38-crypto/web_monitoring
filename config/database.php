@@ -2,19 +2,23 @@
 /**
  * MySQL connection
  * Windows (XAMPP / php -S) uses local defaults.
- * Linux (cPanel) uses the hosting database.
+ * Linux (cPanel) reads config/database.local.php (gitignored).
+ * Copy database.local.php.example to database.local.php on the server.
  */
 
-if (PHP_OS_FAMILY === 'Windows') {
-    define('DB_HOST', 'localhost');
-    define('DB_NAME', 'web_monitoring');
-    define('DB_USER', 'root');
-    define('DB_PASS', '123qwe');
-} else {
-    define('DB_HOST', 'localhost');
-    define('DB_NAME', 'synergy1_kuikhengseng_web_monitoring');
-    define('DB_USER', 'synergy1_shaoxi');
-    define('DB_PASS', 'p07e&61#5e9^c]Y}');
+if (PHP_OS_FAMILY !== 'Windows' && is_file(__DIR__ . '/database.local.php')) {
+    require __DIR__ . '/database.local.php';
+}
+
+if (!defined('DB_HOST')) {
+    if (PHP_OS_FAMILY === 'Windows') {
+        define('DB_HOST', 'localhost');
+        define('DB_NAME', 'web_monitoring');
+        define('DB_USER', 'root');
+        define('DB_PASS', '123qwe');
+    } else {
+        die('Missing config/database.local.php. Copy database.local.php.example and fill in your hosting database details.');
+    }
 }
 
 define('DB_CHARSET', 'utf8mb4');
