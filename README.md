@@ -4,6 +4,24 @@ Simple PHP + MySQL admin panel that checks websites, stores history, and sends T
 
 No user registration. One admin account only.
 
+## Screenshots
+
+**Dashboard**
+
+![Monitoring dashboard](docs/screenshots/dashboard.png)
+
+**Manage websites**
+
+![Manage websites](docs/screenshots/websites.png)
+
+**Monitoring logs**
+
+![Monitoring logs](docs/screenshots/monitoring-logs.png)
+
+**Public status page**
+
+![Public status page](docs/screenshots/public-status.png)
+
 ## Folder structure
 
 ```
@@ -13,9 +31,10 @@ web_monitoring/
 ├── assets/js/             Show/hide password, delete confirm
 ├── config/                Database + app settings
 ├── cron/monitor.php       Automatic monitoring engine
+├── docs/screenshots/      README screenshots
 ├── includes/              Auth, Telegram, check logic, layout
 ├── sql/schema.sql         Database structure
-└── index.php              Redirects to login or dashboard
+└── index.php              Public status page
 ```
 
 ## XAMPP setup
