@@ -4,23 +4,32 @@ Simple PHP + MySQL admin panel that checks websites, stores history, and sends T
 
 No user registration. One admin account only.
 
+This project is for **educational purposes**. See [LICENSE](LICENSE).
+
 ## Screenshots
 
-**Dashboard**
-
-![Monitoring dashboard](docs/screenshots/dashboard.png)
-
-**Manage websites**
-
-![Manage websites](docs/screenshots/websites.png)
-
-**Monitoring logs**
-
-![Monitoring logs](docs/screenshots/monitoring-logs.png)
-
-**Public status page**
-
-![Public status page](docs/screenshots/public-status.png)
+<table>
+  <tr>
+    <td align="center" width="50%">
+      <strong>Dashboard</strong><br/>
+      <img src="docs/screenshots/dashboard.png" alt="Monitoring dashboard" width="400"/>
+    </td>
+    <td align="center" width="50%">
+      <strong>Manage websites</strong><br/>
+      <img src="docs/screenshots/websites.png" alt="Manage websites" width="400"/>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" width="50%">
+      <strong>Monitoring logs</strong><br/>
+      <img src="docs/screenshots/monitoring-logs.png" alt="Monitoring logs" width="400"/>
+    </td>
+    <td align="center" width="50%">
+      <strong>Public status page</strong><br/>
+      <img src="docs/screenshots/public-status.png" alt="Public status page" width="400"/>
+    </td>
+  </tr>
+</table>
 
 ## Folder structure
 
@@ -153,3 +162,7 @@ On the login page, use **Forgot password** with:
 - Local sites only you can reach (for example another PC on your LAN) can be monitored from this machine.
 - Some websites block bots; a block may look like DOWN or a long response time.
 - Keep the default password only for first login.
+
+## License
+
+This project is released under an [Educational Use License](LICENSE) for learning and teaching only. Commercial use is not permitted.
