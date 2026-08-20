@@ -38,11 +38,14 @@ web_monitoring/
 ├── admin/                 Admin pages (login, dashboard, websites, logs, settings)
 ├── assets/css/            Styles
 ├── assets/js/             Show/hide password, delete confirm
-├── config/                App settings (database.local.php is gitignored)
+├── config/                config.php loads gitignored local secrets
+├── config/config.example.php
+├── config/database.local.php.example
 ├── cron/monitor.php       Automatic monitoring engine
 ├── docs/screenshots/      README screenshots
+├── docs/cpanel.example.md Placeholder cPanel notes
 ├── includes/              Auth, Telegram, check logic, layout
-├── sql/schema.sql         Database structure
+├── sql/schema.sql         Table structure only (no real data)
 └── index.php              Public status page
 ```
 
@@ -51,14 +54,12 @@ web_monitoring/
 1. Install [XAMPP](https://www.apachefriends.org/) and start **Apache** + **MySQL**.
 2. Copy this project folder into:
    - `C:\xampp\htdocs\web_monitoring`
-3. Open phpMyAdmin: `http://localhost/phpmyadmin`
-4. Import `sql/schema.sql` (creates database `web_monitoring` and tables).
-5. If your MySQL password is not empty, edit `config/database.php`.
-6. Open: `http://localhost/web_monitoring/`
-7. Log in:
-   - Username: `admin`
-   - Password: `admin123`
-8. Change the password immediately (Settings, or Forgot password).
+3. Copy `config/config.example.php` to `config/config.local.php` and replace `YOUR_CRON_SECRET` and `YOUR_RECOVERY_KEY`.
+4. Copy `config/database.local.php.example` to `config/database.local.php` and fill in your local MySQL details.
+5. Open phpMyAdmin: `http://localhost/phpmyadmin`
+6. Import `sql/schema.sql` (creates tables, no user data).
+7. Open: `http://localhost/web_monitoring/install.php` and create the first admin account.
+8. Log in, then **change the password immediately**.
 
 PHP **cURL** must be enabled (default in XAMPP). In `php.ini` confirm `extension=curl` is not commented out.
 
@@ -69,7 +70,7 @@ PHP **cURL** must be enabled (default in XAMPP). In `php.ini` confirm `extension
 3. Dashboard → **Check all websites now** (does not wait for the next interval).
 4. Keep the PHP server running locally, or add a cPanel Cron Job after upload.
 
-Change `ADMIN_RESET_KEY` and `CRON_KEY` in `config/config.php`.
+Never commit `config.local.php` or `database.local.php`.
 
 ## Telegram bot setup
 
@@ -80,7 +81,7 @@ Change `ADMIN_RESET_KEY` and `CRON_KEY` in `config/config.php`.
    - Open: `https://api.telegram.org/bot<YOUR_TOKEN>/getUpdates`
    - Find `"chat":{"id": 123456789}`
    - For a group, add the bot to the group, send a message, then read `getUpdates` again (group IDs are often negative).
-5. Paste token and chat ID in **Admin → Settings** (or in `config/config.php`).
+5. Paste token and chat ID in **Admin → Settings**. Do not put real tokens in files that will be committed.
 
 Alerts are sent **only when status changes** (or when a site first becomes slow). Repeated UP or repeated DOWN checks do not send another Telegram message.
 
@@ -129,13 +130,19 @@ Status colors:
 
 ## cPanel upload
 
-1. In cPanel **MySQL Databases**, create a database and user, then add the user to the database with ALL PRIVILEGES.
-2. Copy `config/database.local.php.example` to `config/database.local.php` and fill in `DB_NAME`, `DB_USER`, and `DB_PASS`. Do not commit that file.
-3. Open **phpMyAdmin**, select that database, **Import** `sql/schema.sql`.
-4. Upload this folder to `public_html` (or a subfolder) with File Manager or FTP. Include `config/database.local.php` on the server only.
-5. Open your site URL. If tables are missing, visit `/install.php` once, then delete `install.php`.
-6. Log in: `admin` / `admin123` and change the password.
-7. cPanel → **Cron Jobs** → every 1 minute. Paste the command shown in **Admin → Settings**.
+Follow [docs/cpanel.example.md](docs/cpanel.example.md). Use placeholders only in git:
+
+```text
+https://yourdomain.com/cron/monitor.php?key=YOUR_CRON_SECRET
+```
+
+1. Create a MySQL database and user in cPanel, then grant ALL PRIVILEGES.
+2. Copy the two example config files to `config.local.php` and `database.local.php` **on the server** and fill in real values there.
+3. Import `sql/schema.sql` (structure only).
+4. Upload the project. Do not commit or publish the local config files, SQL dumps, or zip packages that contain a working config.
+5. Open `/install.php` once to create the admin account, then delete `install.php`.
+6. Log in and change the password immediately.
+7. cPanel → **Cron Jobs** → every 1 minute, using `cron/monitor.php?key=YOUR_CRON_SECRET`.
 
 Host stays `localhost`.
 
@@ -144,7 +151,7 @@ Host stays `localhost`.
 On the login page, use **Forgot password** with:
 
 - Admin username
-- Reset key from `config/config.php` (`ADMIN_RESET_KEY`)
+- Recovery key from `config/config.local.php` (`ADMIN_RESET_KEY`, set from `YOUR_RECOVERY_KEY`)
 - New password
 
 ## Database tables
@@ -161,7 +168,8 @@ On the login page, use **Forgot password** with:
 - URLs must start with `http://` or `https://`.
 - Local sites only you can reach (for example another PC on your LAN) can be monitored from this machine.
 - Some websites block bots; a block may look like DOWN or a long response time.
-- Keep the default password only for first login.
+- Keep the starter admin password only until first login, then change it.
+- Do not commit real passwords, cron keys, Telegram tokens, SQL dumps, or zip files that contain a working config.
 
 ## License
 

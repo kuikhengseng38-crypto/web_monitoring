@@ -1,10 +1,17 @@
 <?php
 /**
- * Copy this file to database.local.php and fill in your hosting database details.
+ * Copy this file to database.local.php and fill in your database details.
  * database.local.php is gitignored and must not be committed.
  */
 
-define('DB_HOST', 'localhost');
-define('DB_NAME', 'your_database_name');
-define('DB_USER', 'your_database_user');
-define('DB_PASS', 'your_database_password');
+if (PHP_OS_FAMILY === 'Windows') {
+    define('DB_HOST', 'localhost');
+    define('DB_NAME', 'web_monitoring');
+    define('DB_USER', 'root');
+    define('DB_PASS', 'your_local_mysql_password');
+} else {
+    define('DB_HOST', 'localhost');
+    define('DB_NAME', 'your_database_name');
+    define('DB_USER', 'your_database_user');
+    define('DB_PASS', 'your_database_password');
+}

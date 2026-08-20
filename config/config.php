@@ -1,31 +1,26 @@
 <?php
 /**
- * Application configuration
- * Copy values here after setup. Telegram values can also be set in Admin > Settings.
+ * Loads local secrets from config.local.php (gitignored).
+ * Copy config.example.php to config.local.php before first run.
  */
 
-define('APP_NAME', 'Website Monitor');
-define('APP_TIMEZONE', 'Asia/Taipei');
+if (!is_file(__DIR__ . '/config.local.php')) {
+    http_response_code(500);
+    die('Missing config/config.local.php. Copy config.example.php to config.local.php and fill in your values.');
+}
 
+require_once __DIR__ . '/config.local.php';
+
+if (!defined('APP_TIMEZONE')) {
+    define('APP_TIMEZONE', 'Asia/Taipei');
+}
 date_default_timezone_set(APP_TIMEZONE);
 
-// Used on the Forgot Password page. Change this after first login.
-define('ADMIN_RESET_KEY', 'change-this-reset-key');
+if (!defined('ADMIN_RESET_KEY') || !defined('CRON_KEY')) {
+    http_response_code(500);
+    die('config.local.php is incomplete. Compare it with config.example.php.');
+}
 
-// HTTP trigger key for cPanel cron (wget/curl) or browser
-define('CRON_KEY', 'sx-wm-7f3a9c2e4b18');
-
-// Fallback Telegram credentials (Admin Settings in the database override these if filled)
-define('TELEGRAM_BOT_TOKEN', '');
-define('TELEGRAM_CHAT_ID', '');
-
-// HTTP check timeout in seconds
-define('CHECK_TIMEOUT', 10);
-
-// Default slow-response threshold in milliseconds
-define('DEFAULT_SLOW_MS', 3000);
-
-// Local Windows only: start a hidden watcher. On cPanel use Cron Jobs instead.
 if (PHP_SAPI !== 'cli' && !defined('MONITOR_DAEMON_PROCESS') && PHP_OS_FAMILY === 'Windows') {
     require_once dirname(__DIR__) . '/includes/daemon.php';
     monitor_daemon_ensure();

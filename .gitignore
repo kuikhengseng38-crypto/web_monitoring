@@ -1,1 +1,37 @@
+# Local secrets — copy from the *.example.php files
+config/config.local.php
 config/database.local.php
+.env
+.env.*
+
+# Hosting notes that often contain real credentials
+CPANEL.md
+cpanel.md
+上传说明.txt
+
+# SQL dumps with real users / logs (schema.sql is safe to commit)
+sql/cpanel_import.sql
+sql/*dump*.sql
+sql/*.dump.sql
+
+# Runtime, logs, locks, generated scripts
+storage/*.pid
+storage/*.lock
+storage/*.log
+storage/heartbeat.txt
+storage/start_watch.vbs
+config/installed.lock
+*.log
+
+# Archives that often include a full working config
+*.zip
+
+# Keys
+*.pem
+*.key
+id_rsa
+id_rsa.pub
+
+# OS
+.DS_Store
+Thumbs.db

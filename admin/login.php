@@ -6,7 +6,7 @@ if (current_admin()) {
 }
 
 $error = '';
-$username = 'admin';
+$username = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = trim($_POST['username'] ?? '');
@@ -47,14 +47,14 @@ $pageTitle = 'Admin login';
             <p>
                 <label for="password">Password</label>
                 <div class="password-wrap">
-                    <input id="password" name="password" type="password" value="admin123" autocomplete="current-password" required>
+                    <input id="password" name="password" type="password" autocomplete="current-password" required>
                     <button type="button" class="toggle-pass" data-toggle-password="password">Show</button>
                 </div>
             </p>
             <button class="btn" type="submit">Login</button>
         </form>
         <p class="help"><a href="<?php echo h(public_status_url()); ?>">View public status page</a> · <a href="forgot_password.php">Forgot password?</a></p>
-        <p class="help">Default account after import: <strong>admin</strong> / <strong>admin123</strong></p>
+        <p class="help">Change the admin password immediately after installation.</p>
     </div>
 </div>
 <script src="../assets/js/app.js"></script>

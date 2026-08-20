@@ -1,4 +1,5 @@
 -- Website Monitoring System
+-- Table structure only. Do not import dumps that contain real users or logs.
 -- Select your database in phpMyAdmin, then Import this file.
 -- Do not run CREATE DATABASE on cPanel (the database already exists).
 
@@ -49,8 +50,3 @@ INSERT INTO settings (setting_key, setting_value) VALUES
     ('slow_threshold_ms', '3000'),
     ('treat_4xx_as_down', '1')
 ON DUPLICATE KEY UPDATE setting_key = setting_key;
-
--- Default admin / admin123 (password_hash PASSWORD_DEFAULT)
-INSERT INTO admins (username, password) VALUES
-    ('admin', '$2y$12$HjisOJiy43m4r3bV7cyTd.16XZ9SOhu7iwgrkAK6Djrqx45EJvV0S')
-ON DUPLICATE KEY UPDATE username = username;

@@ -2,7 +2,7 @@
 /**
  * Automatic monitoring engine.
  * CLI:  php cron/monitor.php
- * HTTP: http://localhost/web_monitoring/cron/monitor.php?key=YOUR_CRON_KEY
+ * HTTP: https://yourdomain.com/cron/monitor.php?key=YOUR_CRON_SECRET
  */
 
 require_once dirname(__DIR__) . '/config/config.php';
