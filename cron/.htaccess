@@ -1,0 +1,4 @@
+Require all denied
+<Files "monitor.php">
+    Require all granted
+</Files>

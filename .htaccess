@@ -1,0 +1,7 @@
+# Website Monitoring System - Apache / cPanel
+Options -Indexes
+DirectoryIndex index.php
+
+<FilesMatch "\.(sql|log|pid|lock|vbs|bak|md)$">
+    Require all denied
+</FilesMatch>
